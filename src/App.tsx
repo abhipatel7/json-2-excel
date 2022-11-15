@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="App">
       <Form jsonData={jsonData} setJsonData={setJsonData} />
-      {gridData?.length && <Grid data={gridData} columns={columns} />}
+      {gridData?.length ? <Grid data={gridData} columns={columns} /> : null}
     </div>
   );
 }
