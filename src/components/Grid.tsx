@@ -18,7 +18,7 @@ export const Grid: FC<GridProps> = ({ data, columns }) => {
 
   return (
     <ExcelExport data={data} ref={_export}>
-      <KendoGrid data={data}>
+      <KendoGrid data={data} resizable>
         <GridToolbar>
           <button
             title="Export Excel"

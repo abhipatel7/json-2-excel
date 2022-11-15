@@ -13,3 +13,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.k-grid tbody tr {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
