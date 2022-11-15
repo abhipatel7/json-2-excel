@@ -1,28 +1,34 @@
-import React from 'react';
-import { Button } from '@progress/kendo-react-buttons';
-import kendoka from './kendoka.svg';
+import { useEffect, useState } from 'react';
 import './App.scss';
+import { Column } from './interface';
+import { getColumnsFromJSON } from './utilities/getColumnsFromJSON';
+import { toTitleCase } from './utilities';
+import { Form, Grid } from './components';
 
 function App() {
-  const handleClick = React.useCallback(() => {
-    window.open('https://www.telerik.com/kendo-react-ui/components/', '_blank');
-  }, []);
+  const [jsonData, setJsonData] = useState<string>('');
+  const [gridData, setGridData] = useState<any[] | undefined>([]);
+  const [columns, setColumns] = useState<Column[]>([]);
+
+  useEffect(() => {
+    if (jsonData) {
+      const parsedJsonData = JSON.parse(jsonData);
+
+      setColumns(
+        getColumnsFromJSON(parsedJsonData[0]).map((col) => ({
+          field: col,
+          title: toTitleCase(col),
+        }))
+      );
+
+      setGridData(parsedJsonData);
+    }
+  }, [jsonData]);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={kendoka} className="App-logo" alt="kendoka" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Button
-          themeColor={'primary'}
-          size={"large"}
-          onClick={handleClick}
-        >
-          Learn KendoReact
-        </Button>
-      </header>
+      <Form jsonData={jsonData} setJsonData={setJsonData} />
+      {gridData?.length && <Grid data={gridData} columns={columns} />}
     </div>
   );
 }
